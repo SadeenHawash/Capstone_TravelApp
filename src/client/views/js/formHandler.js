@@ -1,25 +1,30 @@
 import axios from "axios";
 import { calculateRemainingDays } from "./calculateRemainingDays";
+import { calculateTripLength } from "./calculateTripLength";
 
 const form = document.querySelector("form");
 const cityInput = document.querySelector("#city");
-const dateInput = document.querySelector("#date");
+const startDateInput = document.querySelector("#start-date");
+const endDateInput = document.querySelector("#end-date");
 
 async function handleSubmit(event) {
   event.preventDefault();
   // get the city location
   const location = await getCity();
   const { name, lat, lng } = location;
-  // get the date input value
-  const date = dateInput.value;
+  // get the dates input value
+  const startDate = startDateInput.value;
+  const endDate = endDateInput.value;
+  // calculate the trip duration
+  const tripLength = calculateTripLength(startDate, endDate);
   // calculate the remaining days form the current date
-  const remainingDays = calculateRemainingDays(date);
+  const remainingDays = calculateRemainingDays(startDate);
   // get the city weather information
   const weather = await getWeather(lat, lng, remainingDays);
   // get the city picture
   const { image } = await getCityPicture(name);
   // update the UI
-  updateUI(name, weather, remainingDays, image);
+  updateUI(cityInput.value, weather, remainingDays, image, tripLength);
 }
 
 // get the city location
@@ -52,13 +57,13 @@ const getCityPicture = async (name) => {
 
 // update the UI
 
-const updateUI = (name, weather, remainingDays, picture) => {
+const updateUI = (location, weather, remainingDays, picture, tripLength) => {
   // update the remaining days
   document.querySelector(
     "#rDays"
   ).innerHTML = `Your trip starts in ${remainingDays} days from now!!`;
   // update the city name
-  document.querySelector(".city-name").innerHTML = `Location: ${name}`;
+  document.querySelector(".city-name").innerHTML = `Location: ${location}`;
   // update the weather information
   document.querySelector(".weather").innerHTML =
     remainingDays > 7
@@ -74,12 +79,16 @@ const updateUI = (name, weather, remainingDays, picture) => {
     remainingDays > 7 ? `Max temp: ${weather.app_max_temp} &deg C` : "";
   document.querySelector(".min-temp").innerHTML =
     remainingDays > 7 ? `Min temp: ${weather.app_min_temp} &deg C` : "";
+  //update the trip length
+  document.querySelector(
+    ".trip-length"
+  ).innerHTML = `Trip Length: ${tripLength} days`;
   // update the picture
   document.querySelector(".city-pic").innerHTML = `
-  <image
+  <img
   src="${picture}" 
   alt="an image that describes the city nature"
-  >
+  />
   `;
   document.querySelector("#flightData").style.display = "block";
 };

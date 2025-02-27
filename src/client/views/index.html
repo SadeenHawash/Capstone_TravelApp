@@ -27,12 +27,22 @@
             />
           </div>
           <div>
-            <label for="date">Date:</label>
+            <label for="start-date">Start Date:</label>
             <input
-              id="date"
+              id="start-date"
               type="date"
-              name="date"
-              placeholder="Enter Date"
+              name="start-date"
+              placeholder="Enter Start Date"
+              required
+            />
+          </div>
+          <div>
+            <label for="end-date">End Date:</label>
+            <input
+              id="end-date"
+              type="date"
+              name="end-date"
+              placeholder="Enter End Date"
               required
             />
           </div>
@@ -47,6 +57,7 @@
         <p class="max-temp"></p>
         <p class="min-temp"></p>
         <p class="weather"></p>
+        <p class="trip-length"></p>
         <div class="city-pic"></div>
       </div>
     </main>
