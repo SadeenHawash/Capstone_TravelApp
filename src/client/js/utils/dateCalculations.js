@@ -1,21 +1,22 @@
+// calculate the remaining days form the current date
+const calculateRemainingDays = (date) => {
+  // get the current and the travel dates
+  const currentDate = new Date();
+  const travelDate = new Date(date);
+  // calculate the difference in days
+  const remainingDays = Math.ceil((travelDate - currentDate) / 86400000);
+  // return the remaining days
+  return remainingDays;
+};
+
 // calculate the trip length
 const calculateTripLength = (startDate, endDate) => {
-  if (!startDate || !endDate) {
-    console.error("Both start and end dates are required.");
-    return null;
-  }
-
   const start = new Date(startDate);
   const end = new Date(endDate);
 
   if (isNaN(start.getTime()) || isNaN(end.getTime())) {
     console.error("Invalid date format. Please enter valid dates.");
     return null;
-  }
-
-  if (end < start) {
-    console.warn("End date cannot be before the start date.");
-    return 0;
   }
 
   // Calculate trip length
@@ -25,4 +26,4 @@ const calculateTripLength = (startDate, endDate) => {
   return tripLength;
 };
 
-export { calculateTripLength };
+export { calculateRemainingDays, calculateTripLength };

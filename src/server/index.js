@@ -45,8 +45,8 @@ app.post("/getWeather", async (req, res) => {
 
 // Get city picture route
 app.post("/getCityPic", async (req, res) => {
-  const { name } = req.body;
-  const pic = await getCityPic(name, picKey);
+  const { cityName } = req.body;
+  const pic = await getCityPic(cityName, picKey);
   res.send(pic);
 });
 

@@ -1,8 +1,8 @@
 const axios = require("axios");
 
-const getCityPic = async (name, picKey) => {
+const getCityPic = async (cityName, picKey) => {
   const { data } = await axios.get(
-    `https://pixabay.com/api/?key=${picKey}&q=${name}&image_type=photo`
+    `https://pixabay.com/api/?key=${picKey}&q=${cityName}&image_type=photo`
   );
   if (data.hits.length > 0) {
   }
