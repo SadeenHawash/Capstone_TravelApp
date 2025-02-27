@@ -1,6 +1,6 @@
 // Variables
-$primary-color: #4caf50;
-$secondary-color: #3e8e41;
+$primary-color: #4c82af;
+$secondary-color: #3e468e;
 
 // Mixins
 @mixin box-shadow($shadow) {
@@ -12,8 +12,15 @@ $secondary-color: #3e8e41;
 
 // Base styles
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f2f2f2;
+
+  h1 {
+    color: $primary-color;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
 
   form {
     margin: 20px;
@@ -28,7 +35,8 @@ body {
       font-weight: bold;
     }
 
-    input[type="text"] {
+    input[type="text"],
+    input[type="date"] {
       width: 100%;
       padding: 10px;
       margin-bottom: 20px;
@@ -82,7 +90,7 @@ body {
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
-  background-color: orange;
+  background-color: rgb(255, 51, 0);
   color: black;
 }
 

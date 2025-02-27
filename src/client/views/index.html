@@ -7,25 +7,49 @@
   </head>
 
   <body>
-    hello
-    <!-- <main>
+    <main>
+      <h1>Travel Planner</h1>
+      <!-- FORM -->
       <div class="container">
-        <form id="urlForm" onsubmit="return Client.handleSubmit(event)">
-          <label for="url">Enter an Article URL:</label>
-          <input
-            id="url"
-            type="text"
-            name="url"
-            placeholder="Enter URL"
-            required
-          />
-          <button id="submitButton" type="submit">Submit</button>
+        <form
+          id="form"
+          onsubmit="return Client.handleSubmit(event)"
+          method="POST"
+        >
+          <div>
+            <label for="city">City:</label>
+            <input
+              id="city"
+              type="text"
+              name="city"
+              placeholder="Enter City"
+              required
+            />
+          </div>
+          <div>
+            <label for="date">Date:</label>
+            <input
+              id="date"
+              type="date"
+              name="date"
+              placeholder="Enter Date"
+              required
+            />
+          </div>
+          <button type="submit">Submit</button>
         </form>
       </div>
-      <div id="results">
-        <h3>Analysis Result:</h3>
+      <!-- OUTPUT -->
+      <div id="flightData">
+        <h2 id="rDays"></h2>
+        <p class="city-name"></p>
+        <p class="temp"></p>
+        <p class="max-temp"></p>
+        <p class="min-temp"></p>
+        <p class="weather"></p>
+        <div class="city-pic"></div>
       </div>
-    </main> -->
+    </main>
     <!-- <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {

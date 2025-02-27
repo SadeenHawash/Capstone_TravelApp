@@ -8,6 +8,7 @@ module.exports = merge(common, {
   devtool: "source-map",
   resolve: {
     extensions: [".js"],
+    fullySpecified: false,
   },
   output: {
     filename: "bundle.js",

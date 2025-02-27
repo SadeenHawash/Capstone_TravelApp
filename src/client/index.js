@@ -1,15 +1,15 @@
 // js files
-//import { handleSubmit } from "./views/js/formHandler";
+import { handleSubmit } from "./views/js/formHandler";
 
-alert("I EXIST");
-console.log("CHANGE!!");
+// alert("I EXIST");
+// console.log("CHANGE!!");
 
 // sass files
-// import "./views/styles/base.scss";
-// import "./views/styles/footer.scss";
-// import "./views/styles/form.scss";
-// import "./views/styles/header.scss";
-// import "./views/styles/resets.scss";
-// import "./views/styles/style.scss";
+// import "./public/styles/base.scss";
+// import "./public/styles/footer.scss";
+// import "./public/styles/form.scss";
+// import "./public/styles/header.scss";
+// import "./public/styles/resets.scss";
+import "./views/styles/style.scss";
 
-// export { handleSubmit };
+export { handleSubmit };
