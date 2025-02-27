@@ -1,16 +1,16 @@
-// Get UI elements
-const resultsContainer = document.querySelector("#results"); // Ensure this exists in HTML
+// Get the elements from the DOM
+const tripInfo = document.querySelector("#trip-data");
+const savedTripsContainer = document.querySelector("#saved-trips-container");
+import { removeTrip } from "../formHandler";
 
+// Function to update trip-date
 const updateUI = (location, weather, remainingDays, picture, tripLength) => {
-  // update the remaining days
-  document.querySelector(
-    "#rDays"
-  ).innerHTML = `Your trip starts in ${remainingDays} days from now!!`;
   // Create a new city card
   const cityCard = document.createElement("div");
-  cityCard.classList.add("city-card"); // Add CSS class for styling
+  cityCard.classList.add("city-card");
   cityCard.innerHTML = `
-    <h2>Location: ${location}</h2>
+    <h3>Trip to ${location}</h3>
+    <p>Your trip starts in ${remainingDays} days from now!!</p>
     <p>${
       remainingDays > 7
         ? `Weather is expected to be: ${weather.description}`
@@ -32,9 +32,47 @@ const updateUI = (location, weather, remainingDays, picture, tripLength) => {
     <hr>
   `;
   // Append the new city card instead of replacing content
-  resultsContainer.appendChild(cityCard);
-  document.querySelector("#tripData").style.display = "block";
-  document.querySelector("#results").style.display = "block";
+  tripInfo.appendChild(cityCard);
+  document.querySelector("#trip-data").style.display = "block";
 };
 
-export { updateUI };
+// Function to dynamically add a trip to saved-trips-container
+function addTripToSavedTrips(trip) {
+  const tripElement = document.createElement("div");
+  tripElement.classList.add("saved-trip");
+  tripElement.dataset.id = trip.id;
+
+  const citiesList = trip.cities
+    .map((city, index) => {
+      return `
+      <div>
+        <h3>${city}</h3>
+        <p>Weather: ${trip.weather[index].description}, ${trip.weather[index].temp}°C</p>
+        <img src="${trip.images[index].image}" alt="${city}" width="100">
+      </div>
+    `;
+    })
+    .join("");
+
+  tripElement.innerHTML = `
+    <h2>Trip to ${trip.cities.join(", ")}</h2>
+    <p>Start Date: ${trip.startDate}</p>
+    <p>End Date: ${trip.endDate}</p>
+    <p>Trip Length: ${trip.tripLength} days</p>
+    <p>Remaining Days: ${trip.remainingDays}</p>
+    ${citiesList}
+    <button class="remove-trip" data-id="${trip.id}">Remove Trip</button>
+  `;
+
+  savedTripsContainer.appendChild(tripElement);
+
+  // Attach event listener to the button
+  tripElement
+    .querySelector(".remove-trip")
+    .addEventListener("click", (event) => {
+      const tripId = parseInt(event.target.dataset.id);
+      removeTrip(tripId);
+    });
+}
+
+export { updateUI, addTripToSavedTrips };

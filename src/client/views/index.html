@@ -10,48 +10,38 @@
     <main>
       <h1>Travel Planner</h1>
       <!-- FORM -->
-      <div class="container">
-        <form id="form">
-          <div>
-            <label for="city">City:</label>
-            <input id="city" type="text" name="city" placeholder="Enter City" />
-            <div id="city-error"></div>
-          </div>
-          <div>
-            <label for="start-date">Start Date:</label>
-            <input
-              id="start-date"
-              type="date"
-              name="start-date"
-              placeholder="Enter Start Date"
-            />
-            <div id="start-date-error"></div>
-          </div>
-          <div>
-            <label for="end-date">End Date:</label>
-            <input
-              id="end-date"
-              type="date"
-              name="end-date"
-              placeholder="Enter End Date"
-            />
-            <div id="end-date-error"></div>
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-      <!-- OUTPUT -->
-      <div id="tripData">
-        <h2 id="rDays"></h2>
-        <div id="results"></div>
-        <!-- <p class="city-name"></p>
-        <p class="temp"></p>
-        <p class="max-temp"></p>
-        <p class="min-temp"></p>
-        <p class="weather"></p>
-        <p class="trip-length"></p>
-        <div class="city-pic"></div> -->
-      </div>
+      <form id="form">
+        <div>
+          <label for="city">City:</label>
+          <input id="city" type="text" name="city" placeholder="Enter City" />
+          <div id="city-error"></div>
+        </div>
+        <div>
+          <label for="start-date">Departing Date:</label>
+          <input
+            id="start-date"
+            type="date"
+            name="start-date"
+            placeholder="Enter Start Date"
+          />
+          <div id="start-date-error"></div>
+        </div>
+        <div>
+          <label for="end-date">End Date:</label>
+          <input
+            id="end-date"
+            type="date"
+            name="end-date"
+            placeholder="Enter End Date"
+          />
+          <div id="end-date-error"></div>
+        </div>
+        <button type="submit">Add Trip</button>
+      </form>
+      <!-- TRIP INFO -->
+      <div id="trip-data"></div>
+      <!-- SAVED TRIPS -->
+      <div id="saved-trips-container"></div>
     </main>
   </body>
 </html>

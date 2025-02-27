@@ -2,11 +2,6 @@
 import { handleSubmit } from "./js/formHandler";
 
 // sass files
-// import "./public/styles/base.scss";
-// import "./public/styles/footer.scss";
-// import "./public/styles/form.scss";
-// import "./public/styles/header.scss";
-// import "./public/styles/resets.scss";
 import "./styles/style.scss";
 
 document.addEventListener("DOMContentLoaded", () => {
