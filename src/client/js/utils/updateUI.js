@@ -4,13 +4,22 @@ const savedTripsContainer = document.querySelector("#saved-trips-container");
 import { removeTrip } from "../formHandler";
 
 // Function to update trip-date
-const updateUI = (location, weather, remainingDays, picture, tripLength) => {
+const updateUI = (
+  city,
+  countryName,
+  weather,
+  remainingDays,
+  picture,
+  tripLength
+) => {
   // Create a new city card
   const cityCard = document.createElement("div");
   cityCard.classList.add("city-card");
   cityCard.innerHTML = `
-    <h3>Trip to ${location}</h3>
-    <p>Your trip starts in ${remainingDays} days from now!!</p>
+    <h3>Trip to ${city}, ${countryName}</h3>
+    <p>Your trip starts ${
+      remainingDays == 0 ? "Today" : `in ${remainingDays}`
+    } ${remainingDays > 1 ? "days" : "day"} from now!!</p>
     <p>${
       remainingDays > 7
         ? `Weather is expected to be: ${weather.description}`

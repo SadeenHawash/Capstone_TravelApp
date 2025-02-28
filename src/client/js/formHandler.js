@@ -10,10 +10,8 @@ const cityInput = document.querySelector("#city");
 const startDateInput = document.querySelector("#start-date");
 const endDateInput = document.querySelector("#end-date");
 const savedTripsContainer = document.querySelector("#saved-trips-container");
-
 async function handleSubmit(event) {
   event.preventDefault();
-
   if (!validateInputs(cityInput, startDateInput, endDateInput)) return;
 
   try {
@@ -36,28 +34,32 @@ async function handleSubmit(event) {
       weather: [], // Store weather for each city
       images: [], // Store images for each city
     };
-
     for (const city of cities) {
       const location = await getCity({ city });
-      if (!location) continue;
+      if (!location) return;
 
-      const { name, lat, lng } = location;
-      console.log({ name, lat, lng });
+      const { name, countryName, lat, lng } = location;
 
-      // Mock weather data for testing
-      const weather =
-        remainingDays > 7
-          ? { description: "Partly Cloudy", temp: 22, minTemp: 18, maxTemp: 26 }
-          : { description: "Sunny", temp: 30 };
+      //get the city weather information
+      const weather = await getWeather(lat, lng, remainingDays);
 
       const { image } = await getCityPicture(name);
 
       // Store city data inside the trip
       tripData.cities.push(city);
+      tripData.weather.push({ city, countryName });
       tripData.weather.push({ city, ...weather });
       tripData.images.push({ city, image });
 
-      updateUI(city, weather, remainingDays, image, tripLength, tripData.id);
+      updateUI(
+        city,
+        countryName,
+        weather,
+        remainingDays,
+        image,
+        tripLength,
+        tripData.id
+      );
     }
 
     // Add trip to stored trips
