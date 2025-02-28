@@ -15,9 +15,11 @@ module.exports = merge(common, {
   output: {
     filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "dist"),
-    libraryTarget: "var",
-    library: "Client",
-    clean: true,
+  },
+  devServer: {
+    static: path.join(__dirname, "dist"),
+    compress: true,
+    port: 8080,
   },
   module: {
     rules: [
