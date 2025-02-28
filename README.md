@@ -17,8 +17,8 @@ A simple travel planning app that allows users to save their trips, including de
 - ✅ **Add multiple trip destinations.**
 - ✅ **Automatically calculates trip length and remaining days.**
 - ✅ **Displays weather forecast based on departure date:**
-  &ensp; - **If less than 7 days left** → Shows **current weather & temperature.**
-  &ensp; - **If more than 7 days left** → Shows **weather description, temperature, and min/max temperature.**
+  - **If less than 7 days left** → Shows **current weather & temperature.**
+  - **If more than 7 days left** → Shows **weather description, temperature, and min/max temperature.**
 - ✅ **Fetches a city image.**
 - ✅ **Saves trip data in Local Storage so trips are not lost after refreshing.**
 - ✅ **User can remove trips from the planner.**
@@ -68,15 +68,17 @@ A simple travel planning app that allows users to save their trips, including de
 
 1. **Access the app:** Open your browser and go to http://localhost:8000 to interact with the app.
 2. **Enter your trip details:**
-   &ensp; - Destination(s) (comma-separated for multiple cities).
-   &ensp; - Start Date.
-   &ensp; - End Date.
+   - Destination(s) (comma-separated for multiple cities).
+   - Start Date.
+   - End Date.
 3. Click **"Add Trip".**
 4. **The trip will be displayed, showing:**
-   &ensp; - Remaining days.
-   &ensp; - Weather forecast.
-   &ensp; - Trip duration.
-   &ensp; - Destination image.
+
+   - Remaining days.
+   - Weather forecast.
+   - Trip duration.
+   - Destination image.
+
 5. **Refresh the page** → Your trip will still be there! 🎉
 6. To **remove a trip**, click the **"Remove Trip"** button.
 
