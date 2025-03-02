@@ -6,9 +6,7 @@ const getCityLocation = async (city, username) => {
       `https://secure.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`
     );
     if (data.geonames.length === 0) {
-      throw new Error(
-        "No city with that name. Please make sure of your spelling."
-      );
+      throw new Error("City not found");
     }
     const { name, countryName, lat, lng } = await data.geonames[0];
     return { name, countryName, lat, lng };

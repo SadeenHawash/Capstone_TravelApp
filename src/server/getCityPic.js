@@ -8,7 +8,7 @@ const getCityPic = async (cityName, picKey) => {
     if (!data.hits || data.hits.length === 0) {
       return {
         image:
-          "https://source.unsplash.com/random/640x480?city,morning,night?sig=1",
+          "https://www.televes.com/media/wysiwyg/televes/error-televes.jpg",
       };
     }
     return { image: data.hits[0].webformatURL };
