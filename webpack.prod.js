@@ -16,11 +16,6 @@ module.exports = merge(common, {
     filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "dist"),
   },
-  devServer: {
-    static: path.join(__dirname, "dist"),
-    compress: true,
-    port: 8080,
-  },
   module: {
     rules: [
       {
@@ -36,10 +31,34 @@ module.exports = merge(common, {
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
+      runtimeCaching: [
+        {
+          urlPattern: /\.(?:png|jpg|jpeg|svg|gif)$/,
+          handler: "CacheFirst",
+          options: {
+            cacheName: "images-cache",
+            expiration: {
+              maxEntries: 20,
+              maxAgeSeconds: 7 * 24 * 60 * 60, // 1 week
+            },
+          },
+        },
+        {
+          urlPattern: /.*\.js$/,
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "js-cache",
+          },
+        },
+      ],
     }),
   ],
   optimization: {
     minimize: true,
     minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
+    splitChunks: {
+      chunks: "all",
+    },
+    runtimeChunk: "single",
   },
 });
