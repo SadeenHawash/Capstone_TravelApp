@@ -27,8 +27,8 @@ const updateUI = (
     }</p>
     <p>${
       remainingDays > 7
-        ? `Forecast: ${weather.temp} &deg;C`
-        : `Temperature: ${weather.temp} &deg;C`
+        ? "Typical weather for then is:"
+        : `Temperature: ${weather.temperature} &deg;C`
     }</p>
     <p>${
       remainingDays > 7 ? `Max temp: ${weather.app_max_temp} &deg;C` : ""
@@ -55,8 +55,28 @@ function addTripToSavedTrips(trip) {
     .map((city, index) => {
       return `
       <div>
-        <h3>${city}</h3>
-        <p>Weather: ${trip.weather[index].description}, ${trip.weather[index].temp}°C</p>
+      </br>
+        <h3>${city}, ${trip.countries[index].country}</h3>
+        <p>${
+          trip.remainingDays > 7
+            ? `Weather is expected to be: ${trip.weather[index].description}`
+            : `Weather is: ${trip.weather[index].description}`
+        }</p>
+        <p>${
+          trip.remainingDays > 7
+            ? "Typical weather for then is:"
+            : `Temperature: ${trip.weather[index].temperature} &deg;C`
+        }</p>
+        <p>${
+          trip.remainingDays > 7
+            ? `Max temp: ${trip.weather[index].app_max_temp} &deg;C`
+            : ""
+        }</p>
+        <p>${
+          trip.remainingDays > 7
+            ? `Min temp: ${trip.weather[index].app_min_temp} &deg;C`
+            : ""
+        }</p>
         <img src="${trip.images[index].image}" alt="${city}" width="100">
       </div>
     `;

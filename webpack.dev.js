@@ -7,20 +7,16 @@ module.exports = merge(common, {
   devtool: "source-map",
   resolve: {
     extensions: [".js"],
+    fullySpecified: false,
   },
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    libraryTarget: "var",
-    library: "Client",
-    clean: true,
   },
   devServer: {
-    static: path.join(__dirname, "dist"),
+    static: path.resolve(__dirname, "dist"),
     compress: true,
     port: 8080,
-    hot: true,
-    open: true,
   },
   module: {
     rules: [

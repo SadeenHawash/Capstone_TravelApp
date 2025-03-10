@@ -1,4 +1,8 @@
-import { getCity, getWeather, getCityPicture } from "./services/apiService";
+import {
+  fetchCityCoordinates,
+  fetchWeatherForecast,
+  fetchCityImage,
+} from "./services/apiService";
 import {
   calculateRemainingDays,
   calculateTripLength,
@@ -10,6 +14,8 @@ const cityInput = document.querySelector("#city");
 const startDateInput = document.querySelector("#start-date");
 const endDateInput = document.querySelector("#end-date");
 const savedTripsContainer = document.querySelector("#saved-trips-container");
+const cityErrors = document.querySelector("#city-error");
+
 async function handleSubmit(event) {
   event.preventDefault();
   if (!validateInputs(cityInput, startDateInput, endDateInput)) return;
@@ -31,29 +37,39 @@ async function handleSubmit(event) {
       endDate,
       tripLength,
       remainingDays,
+      countries: [], // Store country for each city
       weather: [], // Store weather for each city
       images: [], // Store images for each city
     };
     for (const city of cities) {
-      const location = await getCity({ city });
-      if (!location) return;
+      const location = await fetchCityCoordinates(city);
+      cityErrors.style.display = "none";
+      if (!location || location.error) {
+        cityErrors.innerHTML = "You need to enter a valid name of a city!";
+        cityErrors.style.display = "block";
+        return;
+      }
 
-      const { name, countryName, lat, lng } = location;
+      const { cityName, country, latitude, longitude } = location;
 
       //get the city weather information
-      const weather = await getWeather(lat, lng, remainingDays);
+      const weather = await fetchWeatherForecast(
+        latitude,
+        longitude,
+        remainingDays
+      );
 
-      const { image } = await getCityPicture(name);
+      const { image } = await fetchCityImage(cityName);
 
       // Store city data inside the trip
       tripData.cities.push(city);
-      tripData.weather.push({ city, countryName });
+      tripData.countries.push({ city, country });
       tripData.weather.push({ city, ...weather });
       tripData.images.push({ city, image });
 
       updateUI(
         city,
-        countryName,
+        country,
         weather,
         remainingDays,
         image,

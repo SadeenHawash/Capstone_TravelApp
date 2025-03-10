@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../index"); // Import your Express app
+const app = require("../server"); // Import your Express app
 
 describe("Server API Tests", () => {
   // test unknown routes
@@ -8,30 +8,32 @@ describe("Server API Tests", () => {
     expect(response.status).toBe(404);
   });
   // test /getCity route
-  test("POST /getCity should return city location", async () => {
-    const response = await request(app)
-      .post("/getCity")
-      .send({ city: "Paris" });
+  describe("POST /getCity", () => {
+    test("Should return city location when given a valid city", async () => {
+      const response = await request(app)
+        .post("/getCity")
+        .send({ city: "Paris" });
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("name");
-    expect(response.body).toHaveProperty("countryName");
-    expect(response.body).toHaveProperty("lat");
-    expect(response.body).toHaveProperty("lng");
-  });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("city");
+      expect(response.body).toHaveProperty("country");
+      expect(response.body).toHaveProperty("latitude");
+      expect(response.body).toHaveProperty("longitude");
+    });
 
-  test("POST /getCity should return 400 for missing city", async () => {
-    const response = await request(app).post("/getCity").send({});
-    expect(response.status).toBe(400);
-    expect(response.body).toHaveProperty("error", "City is required");
+    test("should return 400 for missing city", async () => {
+      const response = await request(app).post("/getCity").send({});
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error", "City name is required.");
+    });
   });
 
   // test /getCity route
   describe("POST /getWeather", () => {
     const validWeatherRequest = {
-      lat: 48.8566,
-      lng: 2.3522,
-      remainingDays: 5,
+      latitude: 48.8566,
+      longitude: 2.3522,
+      daysRemaining: 5,
     };
 
     test("Should return weather data for a valid request", async () => {
@@ -40,18 +42,18 @@ describe("Server API Tests", () => {
         .send(validWeatherRequest);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("description");
-      expect(response.body).toHaveProperty("temp");
+      expect(response.body).toHaveProperty("temperature");
     });
-    test("Should return forecast weather for future dates (remainingDays > 7)", async () => {
+    test("Should return forecast weather for future dates (daysRemaining > 7)", async () => {
       const response = await request(app).post("/getWeather").send({
-        lat: 48.8566,
-        lng: 2.3522,
-        remainingDays: 10,
+        latitude: 48.8566,
+        longitude: 2.3522,
+        daysRemaining: 10,
       });
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("description");
-      expect(response.body).toHaveProperty("temp");
+      expect(response.body).toHaveProperty("temperature");
       expect(response.body).toHaveProperty("app_max_temp");
       expect(response.body).toHaveProperty("app_min_temp");
     });
@@ -61,31 +63,31 @@ describe("Server API Tests", () => {
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty(
         "error",
-        "Missing required parameters"
+        "Missing required parameters."
       );
     });
 
-    test("Should return 400 for invalid remainingDays", async () => {
+    test("Should return 400 for invalid daysRemaining", async () => {
       const response = await request(app)
         .post("/getWeather")
-        .send({ lat: 48.8566, lng: 2.3522, remainingDays: "abc" });
+        .send({ latitude: 48.8566, longitude: 2.3522, daysRemaining: "abc" });
 
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty(
         "error",
-        "Invalid remainingDays value"
+        "Invalid value for daysRemaining."
       );
     });
 
-    test("Should return 400 for negative remainingDays", async () => {
+    test("Should return 400 for negative daysRemaining", async () => {
       const response = await request(app)
         .post("/getWeather")
-        .send({ lat: 48.8566, lng: 2.3522, remainingDays: -3 });
+        .send({ latitude: 48.8566, longitude: 2.3522, daysRemaining: -3 });
 
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty(
         "error",
-        "Invalid remainingDays value"
+        "Invalid value for daysRemaining."
       );
     });
   });

@@ -1,41 +1,45 @@
 import axios from "axios";
 
-const getCity = async (form) => {
+const fetchCityCoordinates = async (city) => {
   try {
-    const { data } = await axios.post("http://localhost:8000/getCity", form, {
-      headers: { "Content-Type": "application/json" },
-    });
-    return data;
+    const cityCoordinatesResponse = await axios.post(
+      "http://localhost:8000/getCity",
+      { city }
+    );
+    return cityCoordinatesResponse.data;
   } catch (error) {
     console.error("Error fetching city data:", error.message);
     return null;
   }
 };
 
-const getWeather = async (lat, lng, remainingDays) => {
+const fetchWeatherForecast = async (latitude, longitude, daysRemaining) => {
   try {
-    const { data } = await axios.post("http://localhost:8000/getWeather", {
-      lat,
-      lng,
-      remainingDays,
-    });
-    return data;
+    const weatherResponse = await axios.post(
+      "http://localhost:8000/getWeather",
+      {
+        latitude,
+        longitude,
+        daysRemaining,
+      }
+    );
+    return weatherResponse.data;
   } catch (error) {
     console.error("Error fetching weather data:", error.message);
     return null;
   }
 };
 
-const getCityPicture = async (cityName) => {
+const fetchCityImage = async (cityName) => {
   try {
-    const { data } = await axios.post("http://localhost:8000/getCityPic", {
+    const imageResponse = await axios.post("http://localhost:8000/getCityPic", {
       cityName,
     });
-    return data;
+    return imageResponse.data;
   } catch (error) {
     console.error("Error fetching city picture:", error.message);
     return null;
   }
 };
 
-export { getCity, getWeather, getCityPicture };
+export { fetchCityCoordinates, fetchWeatherForecast, fetchCityImage };
