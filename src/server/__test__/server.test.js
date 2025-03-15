@@ -15,7 +15,7 @@ describe("Server API Tests", () => {
         .send({ city: "Paris" });
 
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("city");
+      expect(response.body).toHaveProperty("cityName");
       expect(response.body).toHaveProperty("country");
       expect(response.body).toHaveProperty("latitude");
       expect(response.body).toHaveProperty("longitude");

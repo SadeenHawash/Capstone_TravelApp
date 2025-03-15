@@ -22,7 +22,9 @@ const fetchWeatherForecast = async (
     }
     if (daysRemaining > 7) {
       // get the information of the last object in the array
-      const forcastData = response.data.data[data.data.length - 1];
+      const forcastData = response.data.data[response.data.data.length - 1];
+      console.log({ forcastData });
+
       return {
         description: forcastData.weather.description,
         temperature: forcastData.temp,
