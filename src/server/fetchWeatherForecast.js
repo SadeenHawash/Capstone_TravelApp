@@ -12,18 +12,22 @@ const fetchWeatherForecast = async (
     if (daysRemaining >= 0 && daysRemaining <= 7) {
       apiURL = `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherKey}`;
     } else if (daysRemaining > 7) {
-      apiURL = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&units=M&days=${daysRemaining}&key=${weatherKey}`;
+      apiURL = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&units=M&key=${weatherKey}`;
     } else {
       return { error: "Invalid number of remaining days provided." };
     }
     const response = await axios.get(apiURL);
-    if (!response.data.data || response.data.data.length === 0) {
+    if (
+      !response.data ||
+      !response.data.data ||
+      response.data.data.length === 0
+    ) {
       return { error: "No weather data found for the given location." };
     }
     if (daysRemaining > 7) {
       // get the information of the last object in the array
       const forcastData = response.data.data[response.data.data.length - 1];
-      console.log({ forcastData });
+      //console.log({ forcastData });
 
       return {
         description: forcastData.weather.description,
@@ -35,6 +39,7 @@ const fetchWeatherForecast = async (
     const { weather, temp } = response.data.data[0];
     return { description: weather.description, temperature: temp };
   } catch (error) {
+    console.log("Weather API Error:", error.response?.data || error.message);
     return { error: `Error fetching weather: ${error.message}` };
   }
 };
