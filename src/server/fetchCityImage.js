@@ -1,4 +1,12 @@
 const axios = require("axios");
+const cloudinary = require("cloudinary").v2;
+require("dotenv").config();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const fetchCityImage = async (cityName, picKey) => {
   try {
@@ -11,7 +19,13 @@ const fetchCityImage = async (cityName, picKey) => {
         message: "No relevant image found, displaying default error image.",
       };
     }
-    return { image: response.data.hits[0].webformatURL };
+    const imageUrl = response.data.hits[0].webformatURL;
+    const cloudinaryResponse = await cloudinary.uploader.upload(imageUrl, {
+      folder: "city_images",
+      public_id: cityName.replace(/\s+/g, "_"), // Save as city_name.jpg
+      overwrite: true,
+    });
+    return { image: cloudinaryResponse.secure_url };
   } catch (error) {
     return { error: `Failed to retrieve image: ${error.message}` };
   }

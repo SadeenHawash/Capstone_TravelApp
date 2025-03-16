@@ -15,6 +15,7 @@ module.exports = merge(common, {
   output: {
     filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -34,12 +35,12 @@ module.exports = merge(common, {
       runtimeCaching: [
         {
           urlPattern: /\.(?:png|jpg|jpeg|svg|gif)$/,
-          handler: "CacheFirst",
+          handler: "StaleWhileRevalidate",
           options: {
             cacheName: "images-cache",
             expiration: {
-              maxEntries: 20,
-              maxAgeSeconds: 7 * 24 * 60 * 60, // 1 week
+              maxEntries: 50,
+              maxAgeSeconds: 14 * 24 * 60 * 60, // 2 weeks
             },
           },
         },
