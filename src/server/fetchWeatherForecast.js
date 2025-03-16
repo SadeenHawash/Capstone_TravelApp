@@ -11,8 +11,10 @@ const fetchWeatherForecast = async (
     // if the trip is within 7 days or is in the future
     if (daysRemaining >= 0 && daysRemaining <= 7) {
       apiURL = `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherKey}`;
-    } else if (daysRemaining > 7) {
+    } else if (daysRemaining > 7 && daysRemaining <= 16) {
       apiURL = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&units=M&key=${weatherKey}`;
+    } else if (daysRemaining > 16) {
+      return { error: "Weatherbit API only accepts up to 16 remaining days." };
     } else {
       return { error: "Invalid number of remaining days provided." };
     }

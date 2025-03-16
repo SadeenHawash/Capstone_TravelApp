@@ -68,6 +68,20 @@ describe("Server API Tests", () => {
   //     );
   //   });
 
+  //   test("Should return 400 for daysRemaining greater than 16", async () => {
+  //     const response = await request(app).post("/getWeather").send({
+  //       latitude: 48.8566,
+  //       longitude: 2.3522,
+  //       daysRemaining: 17, // value exceeding 16
+  //     });
+
+  //     expect(response.status).toBe(400);
+  //     expect(response.body).toHaveProperty(
+  //       "error",
+  //       "daysRemaining cannot exceed 16."
+  //     );
+  //   });
+
   //   test("Should return 400 for invalid daysRemaining", async () => {
   //     const response = await request(app)
   //       .post("/getWeather")

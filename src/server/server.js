@@ -47,6 +47,9 @@ app.post("/getWeather", async (req, res) => {
   if (isNaN(daysRemaining) || daysRemaining < 0) {
     return res.status(400).json({ error: "Invalid value for daysRemaining." });
   }
+  if (daysRemaining > 16) {
+    return res.status(400).json({ error: "daysRemaining cannot exceed 16." });
+  }
   const weather = await fetchWeatherForecast(
     latitude,
     longitude,
